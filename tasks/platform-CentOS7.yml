@@ -21,3 +21,5 @@
     - "@Development tools"
     - pciutils
     - net-tools
+    - zlib
+    - zlib-devel
