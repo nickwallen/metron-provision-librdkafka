@@ -16,7 +16,7 @@
 #
 ---
 - name: Install dependencies
-  yum: name=* state=present
+  yum: name={{ item }}
   with_items:
     - "@Development tools"
     - pciutils
