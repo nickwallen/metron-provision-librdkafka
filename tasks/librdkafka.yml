@@ -15,9 +15,9 @@
 #  limitations under the License.
 #
 ---
-- name: Download librdkafka-{{ librdkafka_version }}
+- name: Download librdkafka
   get_url:
-    url: "https://github.com/edenhill/librdkafka/archive/v{{ librdkafka_version }}.tar.gz"
+    url: "{{ librdkafka_url }}"
     dest: "/tmp/librdkafka-{{ librdkafka_version }}.tar.gz"
 
 - name: Extract librdkafka tarball
@@ -27,12 +27,13 @@
     copy: no
     creates: "/tmp/librdkafka-{{ librdkafka_version }}"
 
-- name: Build and install librdkafka
+- name: Compile and install librdkafka
   shell: "{{ item }}"
   args:
     chdir: "/tmp/librdkafka-{{ librdkafka_version }}"
-    creates: "{{ librdkafka_prefix }}/lib/liblibrdkafka.so"
+    creates: "{{ librdkafka_home }}/lib/librdkafka.so"
   with_items:
-    - "./configure --prefix={{ librdkafka_prefix }}"
+    - rm -rf build/
+    - "./configure --prefix={{ librdkafka_home }}"
     - make
     - make install
